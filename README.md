@@ -4,7 +4,7 @@ It is one stop solution for all your project management needs. A website which w
 # Usage
 ```
 npm install
-npm run dev
+npm app.js
 
 Go to localhost:4000
 ```
