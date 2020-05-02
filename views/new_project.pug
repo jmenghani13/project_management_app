@@ -1,0 +1,56 @@
+doctype html
+html
+  head
+    link#bootstrap-css(rel='stylesheet' href='/bower_components/bootstrap/dist/css/bootstrap.css')
+    link(rel='stylesheet' href='/bower_components/bootstrap/dist/css/bootstrap.min.css')
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.2/awesomplete.css')
+    link(rel='stylesheet' href='/css/style.css')
+    link(href = "https://fonts.googleapis.com/icon?family=Material+Icons" rel = "stylesheet")
+    title Mr.Manager
+  body#pro
+    .container
+      .row
+        .col-md-3
+        .col-md-6
+          != messages('message',locals)
+          if errors
+            each error, i in errors
+              div(class="alert alert-success_msg") #{error.msg}
+    .container-fluid
+      .row
+        .col-md-12#options
+          a(href='javascript:history.back()')
+            i.material-icons#back arrow_back
+            i.material-icons#close close
+      .row
+        .col-md-4#new_pro
+          br
+          .row
+            .col-md-12#pro_detail
+              h3 Add project details
+          br
+          br
+          .row
+            .col-md-12#pro_detail
+              form(method='POST', action='/workspace/'+workspace_id+'/project/new')
+                label.label Project name
+                input.form-control(name="pro_name" type="text")
+                br
+                label.label Description
+                textarea.form-control(name="pro_desc" type="text")
+                br
+                br
+                button.btn.btn-primary.btn-block(type="submit") Create project
+          
+          
+          
+          
+        
+    script(src='/bower_components/jquery/dist/jquery.min.js')
+    script(src='/bower_components/jquery/dist/jquery.js')
+    script(src='/bower_components/bootstrap/dist/js/bootstrap.min.js')
+    script(src='/bower_components/bootstrap/dist/js/bootstrap.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js')
+    script(src='/js/main.js')
+
+      

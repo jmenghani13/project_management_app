@@ -1,0 +1,118 @@
+/*LOGIN*/
+html,body{
+  background: -webkit-linear-gradient(90deg, #FF512F 10%, #DD2476 90%);
+      background: -moz-linear-gradient(90deg, #FF512F 10%, #DD2476 90%);
+      background: -ms-linear-gradient(90deg, #FF512F 10%, #DD2476 90%);
+      background: -o-linear-gradient(90deg, #FF512F 10%, #DD2476 90%);
+      background: linear-gradient(90deg, #FF512F 10%, #DD2476 90%);
+      font-family: 'Open Sans', sans-serif!important;
+      height: 100%;
+}
+
+.alert-error{
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+}
+
+.alert-success_msg{
+  color: #3c763d;
+  background-color: green;
+  border-color: #d6e9c6;
+}
+
+
+
+h1{
+  color: #ffffff;
+  text-align: center;
+  padding-top: 80px;
+  font-family: "Courier New";
+}
+
+.container{
+height: 100%;
+align-content: center;
+}
+
+.card{
+height: 370px;
+margin-top: 50px;
+margin-bottom: auto;
+width: 400px;
+background-color: rgba(0,0,0,0.5) ;
+}
+
+.social_icon span{
+font-size: 60px;
+margin-left: 10px;
+}
+
+.fa-facebook-square{
+  color: #3b5998;
+}
+
+.fa-google-plus-square{
+  color: #CC3333;
+}
+
+.fa-twitter-square{
+  color: #00acee;
+}
+
+.fa-twitter-square:hover{
+  color: white;
+  cursor: pointer;
+}
+
+.fa-google-plus-square:hover{
+  color: white;
+  cursor: pointer;
+}
+
+.fa-facebook-square:hover{
+  color: white;
+  cursor: pointer;
+}
+
+.card-header h3{
+color: white;
+}
+
+.social_icon{
+position: absolute;
+right: 20px;
+top: -12px;
+}
+
+.input-group-prepend span{
+width: 50px;
+background: linear-gradient(90deg, #00C9FF 0%, #92FE9D 100%);
+color: black;
+border:0 ;
+}
+
+input:focus{
+outline: 0 0 0 0 ;
+box-shadow: 0 0 0 0 ;
+}
+
+.login_btn{
+color: black;
+background: linear-gradient(90deg, #00C9FF 0%, #92FE9D 100%);
+width: 100px;
+}
+
+.login_btn:hover{
+color: black;
+background-color: white;
+}
+
+.links{
+color: white;
+}
+
+.links a{
+margin-left: 4px;
+}
+/*LOGIN*/

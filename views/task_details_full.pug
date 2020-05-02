@@ -1,0 +1,140 @@
+doctype html
+html
+  head
+    link#bootstrap-css(rel='stylesheet' href='/bower_components/bootstrap/dist/css/bootstrap.css')
+    link(rel='stylesheet' href='/bower_components/bootstrap/dist/css/bootstrap.min.css')
+    link(rel='stylesheet' href='/css/style.css')
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css')
+    link(href = "https://fonts.googleapis.com/icon?family=Material+Icons" rel = "stylesheet")
+    title Mr.Manager
+  body
+    .container
+      .row
+        .col-md-2
+        .col-md-8#task_con22
+          .row
+            .col-md-5
+              if task.status === "Incomplete"
+                button.btn.btn-sm#btn7_1(onclick="put_request2()")
+                  i.material-icons#btn7_2 check
+                  | Mark Compelete
+              else
+                button.btn.btn-sm#btn7_1(style="color:#ffffff;background-color:#2dce17;border:1px solid #2dce17" onclick="put_request2()")
+                  i.material-icons#btn7_2 check
+                  | Compeleted
+                
+            .col-md-4
+            .col-md-1
+              i.material-icons#btn8 attach_file
+                .tooltiptext3
+                  |Attachments
+                  br
+                  #line2
+                    |Add a file to this task
+            .col-md-1
+              .dropdown_css
+                i.material-icons#btn9 more_horiz                    
+                  .tooltiptext4
+                    |More actions
+                  #dropdown-content-css  
+                      a(href='#').li Add to another project
+                      a(href='#')#del Delete task
+            .col-md-1
+              a(href='javascript:history.back()')
+                i.material-icons#btn10 close
+          hr
+          .row
+            .col-md-12
+              if task.name == ""
+                input.form-control#task_name(type="text",placeholder="Write a task name",name="task_name",value="" onchange="put_request()")
+              else
+                input.form-control#task_name(type="text",placeholder="Write a task name",name="task_name",value=task.name onchange="put_request()")
+          .row
+            .col-md-4
+              if task.assigned_to == ""
+                button.btn.btn-sm#btn15_1
+                  i.material-icons#btn15_2 account_box
+                  | Unassigned
+              else
+                button.btn.btn-sm#btn15_1(style="color:#000000")
+                  i.material-icons#btn15_2 account_box
+                  | #{task.assigned_to}
+              #assign
+                input.form-control#add_assignee(placeholder="Name of Email" name="add_assignee" type="text" list="names")
+                datalist#names
+                  each user in users
+                    option(value=user.name) #{user.email}
+            .col-md-1
+              button.btn.btn-primary.btn-sm#btn18(onclick="put_request()") Assign
+            .col-md-1                  
+            .col-md-4
+              if task.due_date == ""
+                button.btn.btn-sm#btn16_1
+                  i.material-icons#btn16_2 date_range
+                  | Due Date
+              else
+                button.btn.btn-sm#btn16_1(style="color:#000000")
+                  i.material-icons#btn16_2 date_range
+                  | Due Date : #{task.due_date}
+              #due_date
+                input#date.form-control(name='date', placeholder='DD/MM/YYY', type='text')
+            .col-md-1
+              button.btn.btn-primary.btn-sm#btn19(onclick="put_request()") Set
+          .row
+            .col-md-12
+              hr
+          .row
+            .col-md-1
+              i.material-icons#btn11 notes
+            .col-md-11
+              if task.description == ""
+                textarea.form-control#task_description(placeholder="Description",name="task_description",value="", onchange="put_request()")
+              else
+                textarea.form-control#task_description(placeholder=task.description,name="task_description",value ="" , onchange="put_request()")
+          .row
+            .col-md-12
+                br
+          .row
+            .col-md-1
+              i.material-icons#btn12 assignment
+            .col-md-9
+              if task.project == undefined
+                a(href="#")#add_link
+                  |Add to project
+                #add_input
+                  input.form-control#add_inputtext(placeholder="Add to project" name="add_input" type="text" list="projects")
+                  datalist#projects
+                    each project in projects
+                      option #{project.name}
+              ul#pro_list
+                if task.project !== undefined
+                  li.projects
+                    span.text-pro2 #{task.project.name}
+            .col-md-1
+                button.btn.btn-primary.btn-md#btn17(onclick="put_request()") Add
+          .row
+            .col-md-12
+              hr
+          .row
+            .col-md-12#activity_log2
+          .row
+            .col-md-12
+              hr
+          .row
+            .col-md-1
+              i.material-icons#btn13 person_pin
+            .col-md-11
+              input.form-control#comment(type="text",placeholder="Ask a question or post an update...",name="comment")  
+          .row
+            .col-md-11
+            .col-md-1
+              button.btn-primary.btn-sm.btn#btn14 Comment
+            
+
+script(src='/bower_components/jquery/dist/jquery.min.js')
+script(src='/bower_components/jquery/dist/jquery.js')
+script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js')
+script(src='/bower_components/bootstrap/dist/js/bootstrap.min.js')
+script(src='/bower_components/bootstrap/dist/js/bootstrap.js')
+script(src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js')
+script(src='/js/main_2.js')

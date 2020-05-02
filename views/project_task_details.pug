@@ -1,0 +1,309 @@
+doctype html
+html
+  head
+    link#bootstrap-css(rel='stylesheet' href='/bower_components/bootstrap/dist/css/bootstrap.css')
+    link(rel='stylesheet' href='/bower_components/bootstrap/dist/css/bootstrap.min.css')
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.2/awesomplete.css')
+    link(rel='stylesheet' href='/css/style.css')
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css')
+    link(href = "https://fonts.googleapis.com/icon?family=Material+Icons" rel = "stylesheet")
+    title Mr.Manager
+  body
+    nav.navbar.navbar-expand.navbar-dark 
+      #navbarsExample02.collapse.navbar-collapse
+          ul.navbar-nav.mr-auto 
+            li.nav-item.active
+              a#menu-toggle.navbar-brand(href='#menu-toggle')
+                span.navbar-toggler-icon
+                button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarsExample02', aria-controls='navbarsExample02', aria-expanded='false', aria-label='Toggle navigation')            
+                li.nav-item.active
+                  a.nav-link#heading
+                    | #{project.name} 
+                  span.sr-only (current)
+          ul.navbar-nav.nabar-right
+            li
+            .input-group-prepend
+              input.form-control#search_box(type='search',name='search', placeholder='Search' list="data")
+              datalist#data
+                each project, i in projects
+                  if user.id == project.creator.id
+                    option(value='/project/project_task/'+project.id) #{project.name}
+                each task in tasks
+                  if user.id == task.creator || user.name == task.assigned_to
+                      option(value='/user/task_detail/'+task.id) #{task.name}
+            li.nav-item.active
+              button.btn.btn-grad.dropdown(data-toggle="dropdown") + New
+              ul.dropdown-menu.dropdown#new-dropdown
+                <a class="item" href='#'>  
+                  li.new-list
+                    <i class='material-icons new-icons'>check_circle_outline</i>Task
+                </a>
+                <a class="item" href='/project/new'>
+                  li.new-list
+                    <i class='material-icons new-icons'>assignment</i>Project
+                </a>
+                <a class="item" href='#'>
+                  li.new-list
+                    <i class='material-icons new-icons'>chat_bubble_outline</i>Conversation
+                </a>
+                <a class="item" href='#'>
+                  li.new-list
+                    <i class='material-icons new-icons'>person_add</i>Invite
+                </a>
+            li.nav-item.active
+              button.btn.btn-circle.btn-primary.dropdown(data-toggle="dropdown")
+                i.material-icons#person_i person
+              ul.dropdown-menu.dropdown#user-dropdown
+                a.item(href='#')
+                div(data-toggle="modal" data-target="#my2")
+                  li.user-list Workspace Settings
+                a.item(href='#')
+                div(data-toggle="modal" data-target="#my3")
+                  li.user-list Create New Workspace
+                li
+                  hr
+                a.item(href='#')
+                  li.user-list My Profile Settings
+                a.item(href='/logout')
+                  li.user-list Log Out
+              #my2.modal.fade(role='dialog')
+                .modal-dialog.modal-lg
+                  .modal-content
+                    .modal-header
+                      h4.modal-title: span#heading2 Workspace Settings
+                      i.material-icons#btn22(data-dismiss='modal' , style="float:right") close
+                    .modal-body
+                      ul.list-group.list-group-horizontal#ws-list
+                        li.list-group-item
+                          button.btn#it1 General
+                        li.list-group-item  
+                          button.btn#it2 Members
+                      hr#div-line
+                      span#div1
+                        .row
+                          .col-md-3
+                            label#ws_name Workspace Name :
+                          .col-md-9
+                            input.form-control(type='text' value="XXXXXX")
+                            button.btn.btn-primary#btn25(type='button', data-dismiss='modal',style="float:right") Update
+                      div#div2
+                        each member in project.team_member
+                          .row
+                            .col-md-3
+                              p #{member.name}
+                            .col-md-1
+                            .col-md-5(style="color:#9ca6af")
+                              p #{member.email}
+                        br
+                        .row
+                          .col-md-12#end2
+                            p INIVITE MORE MEMBERS
+                        .row
+                          .col-md-5
+                            p EMAIL
+                          .col-md-1
+                          .col-md-5
+                            p NAME(OPTIONAL)
+                        .row
+                          .col-md-5
+                            input.form-control(type='email')
+                          .col-md-1
+                          .col-md-5
+                            input.form-control(type='text')
+              #my3.modal.fade(role='dialog')
+                .modal-dialog.modal-lg
+                  .modal-content
+                    .modal-header
+                      h4.modal-title: span#heading2 Create Your Workspace
+                      i.material-icons#btn22(data-dismiss='modal' , style="float:right") close
+                    .modal-body
+                      .row
+                        .col-md-3
+                          label#ws_name Workspace Name :
+                        .col-md-9
+                          input.form-control(type='text' value= "Company or Team Name")
+                      button.btn.btn-primary#btn25(type='button', data-dismiss='modal',style="float:right") Create Workspace  
+                          
+              
+                
+    #wrapper.toggled
+      #sidebar-wrapper
+        ul.sidebar-nav
+          li.sidebar-brand
+            a(href='#')  Project Name 
+          li.list-item 
+            a(href='/project')
+              i.material-icons.sidebar-icons home
+              | Home
+          li.list-item
+            <a href='/user/my_task'><i class='material-icons sidebar-icons'>check_circle_outline</i>My Tasks</a>
+          
+      #page-content-wrapper
+        .container
+          .row
+            .col-md-3
+            .col-md-6
+              != messages('message',locals)
+              if errors
+                each error, i in errors
+                  div(class="alert alert-success_msg") #{error.msg}
+        .container-fluid
+          .row
+            .col-md-6#task_con1
+                .row
+                  .col-md-6
+                    form(method="post" action="/user/my_task")
+                        button#btn1.btn.btn-primary.btn-sm(type="submit" value="Add Task") Add Task
+                  .col-md-6
+                    button#btn2.btn: i.material-icons person_outline
+                      .tooltiptext 
+                        | Assignee
+                hr
+                .row
+                  .col-md-1
+                    i.material-icons#btn20 check_circle_outline
+                  .col-md-11
+                    input.form-control#current(type="text",placeholder="Write a task name",name="task_name",value= task.name onKeyUp="document.getElementById('task_name').value=this.value" onchange="put_request()")
+                ul#task_list
+                  each single_task in tasks
+                    if task.id !== single_task.id
+                      a.tl(href="/project/project_task/project_task_details/" + single_task.id)
+                        if single_task.name !==""
+                          li.task-list #{single_task.name}
+                        else
+                          li.task-list Write a task name
+                    else
+                      if single_task.name !==""
+                        li.task-list #{single_task.name}
+                      else
+                        li.task-list Write a task name
+            .col-md-5#task_con2
+              .row
+                .col-md-5
+                  if task.status === "Incomplete"
+                    button.btn.btn-sm#btn7_1(onclick="put_request2()")
+                      i.material-icons#btn7_2 check
+                      | Mark Compelete
+                  else
+                    button.btn.btn-sm#btn7_1(style="color:#ffffff;background-color:#2dce17;border:1px solid #2dce17" onclick="put_request2()")
+                      i.material-icons#btn7_2 check
+                      | Compeleted
+                .col-md-4
+                .col-md-1
+                  i.material-icons#btn8 attach_file
+                    .tooltiptext3
+                      |Attachments
+                      br
+                      #line2
+                        |Add a file to this task
+                .col-md-1
+                  .dropdown_css
+                    i.material-icons#btn9 more_horiz                    
+                      .tooltiptext4
+                        |More actions
+                      #dropdown-content-css  
+                          a(href='#').li Add to another project
+                          a(href='#').li Full screen
+                          a(href='#')#del Delete task
+                .col-md-1
+                  a(href="/project/project_task/"+ project.id )
+                    i.material-icons#btn10 close
+              hr
+              .row
+                .col-md-12
+                  if task.name == ""
+                    input.form-control#task_name(type="text",placeholder="Write a task name",name="task_name",value="" onKeyUp="document.getElementById('current').value=this.value" onchange="put_request()")
+                  else
+                    input.form-control#task_name(type="text",placeholder="Write a task name",name="task_name",value=task.name onKeyUp="document.getElementById('current').value=this.value" onchange="put_request()")
+              .row
+                .col-md-4
+                  if task.assigned_to == ""
+                    button.btn.btn-sm#btn15_1
+                      i.material-icons#btn15_2 account_box
+                      | Unassigned
+                  else
+                    button.btn.btn-sm#btn15_1(style="color:#000000")
+                      i.material-icons#btn15_2 account_box
+                      | #{task.assigned_to}
+                  #assign
+                    input.form-control#add_assignee(placeholder="Name of Email" name="add_assignee" type="text" list="names")
+                    datalist#names
+                      each user in users
+                        option(value=user.name) #{user.email}
+                .col-md-1
+                  button.btn.btn-primary.btn-sm#btn18(onclick="put_request()") Assign
+                .col-md-5
+                  if task.due_date == ""
+                    button.btn.btn-sm#btn16_1
+                      i.material-icons#btn16_2 date_range
+                      | Due Date
+                  else
+                    button.btn.btn-sm#btn16_1(style="color:#000000")
+                      i.material-icons#btn16_2 date_range
+                      | Due Date : #{task.due_date}
+                  #due_date
+                    input#date.form-control(name='date', placeholder='DD/MM/YYY', type='text')
+                .col-md-1
+                  button.btn.btn-primary.btn-sm#btn19 Set
+              .row
+                .col-md-12
+                  hr
+              .row
+                .col-md-1
+                  i.material-icons#btn11 notes
+                .col-md-11
+                  if task.description == ""
+                    textarea.form-control#task_description(placeholder="Description",name="task_description",value="", onchange="put_request()")
+                  else
+                    textarea.form-control#task_description(placeholder=task.description,name="task_description",value ="" , onchange="put_request()")
+              .row
+                .col-md-12
+                    br
+              .row
+                .col-md-1
+                  i.material-icons#btn12 assignment
+                .col-md-9
+                  if task.project == undefined
+                    a(href="#")#add_link
+                      |Add to project
+                    #add_input
+                      input.form-control#add_inputtext(placeholder="Add to project" name="add_input" type="text" list="projects")
+                      datalist#projects
+                        each project in projects
+                          option #{project.name}
+                  ul#pro_list
+                    if task.project !== undefined
+                      li.projects
+                        span.text-pro2 #{task.project.name}
+                .col-md-1
+                    button.btn.btn-primary.btn-md#btn17(onclick="put_request()") Add
+              .row
+                .col-md-12
+                  hr
+              .row
+                .col-md-12#activity_log
+                  each activity,i in task.activity_log
+                    .logs
+                      | #{activity.text} <small></small><span style="display:none">#{activity.date}</span>
+              .row
+                .col-md-12
+                  hr
+              .row
+                .col-md-1
+                  i.material-icons#btn13 person_pin
+                .col-md-11
+                  input.form-control#comment(type="text",placeholder="Ask a question or post an update...",name="comment")  
+              .row
+                .col-md-11
+                .col-md-1
+                  button.btn-primary.btn-sm.btn#btn14 Comment
+                
+
+    script(src='/bower_components/jquery/dist/jquery.min.js')
+    script(src='/bower_components/jquery/dist/jquery.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.2/awesomplete.js')
+    script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js')
+    script(src='/bower_components/bootstrap/dist/js/bootstrap.min.js')
+    script(src='/bower_components/bootstrap/dist/js/bootstrap.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js')
+    script(src='/js/main_2.js')

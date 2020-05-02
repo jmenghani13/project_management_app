@@ -1,0 +1,60 @@
+doctype html
+html
+  head
+    link#bootstrap-css(rel='stylesheet' href='/bower_components/bootstrap/dist/css/bootstrap.css')
+    link(rel='stylesheet' href='/bower_components/bootstrap/dist/css/bootstrap.min.css')
+    link(rel='stylesheet' href='/css/style.css')
+    link(href = "https://fonts.googleapis.com/icon?family=Material+Icons" rel = "stylesheet")
+    title Mr.Manager
+  body#pro
+    .container
+      .row
+        .col-md-3
+        .col-md-6
+          != messages('message',locals)
+          if errors
+            each error, i in errors
+              div(class="alert alert-success_msg") #{error.msg}
+    .container-fluid
+      .row
+        .col-md-4
+        .col-md-4#one_time
+          .row#r1
+            .col-md-12
+              h2 Tell us about your team
+          .row
+            .col-md-12
+              p
+              |Teams are group of people in your organization who
+              | work together on projects.
+              br
+              br
+          .row
+            .col-md-12
+              form(method='POST' , action='/workspace')
+                  #form-group
+                    label.label What type of team are you on?
+                    select.form-control(name='team_type')
+                      option(value='' selected='true' disabled='disabled') Select a type
+                      option(value='Marketing') Marketing
+                      option(value='Product') Product
+                      option(value='Design') Design
+                      option(value='Operations') Operations
+                      option(value='HR') HR
+                      option(value='IT') IT
+                      option(value='Engineering') Engineering
+                      option(value='General project management') General project management
+                  br
+                  #form-group
+                    label.label What is your team called?
+                    input.form-control(name='team_name', type='text', placeholder="Eg. Marketing, Design, Special Projects, etc")
+                  br
+                  input.btn.btn-primary.btn-block(type='submit', value='Create Workspace')
+              
+          
+                       
+    script(src='/bower_components/jquery/dist/jquery.min.js')
+    script(src='/bower_components/jquery/dist/jquery.js')
+    script(src='/bower_components/bootstrap/dist/js/bootstrap.min.js')
+    script(src='/bower_components/bootstrap/dist/js/bootstrap.js')
+    script(src='/js/main.js')
